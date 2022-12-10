@@ -49,6 +49,9 @@ if __name__ == "__main__":
                 print(f"{absolute_path} seems to be at the right place already...")
             else:
                 print(f"Moving {absolute_path} to {target_path}")
-                shutil.move(absolute_path, target_path)
+                if not os.getenv("DRYRUN"):
+                    shutil.move(absolute_path, target_path)
+        if os.getenv("RUN_ONCE"):
+            exit(0)
         print(f"Current Time: {datetime.now()}, Going to sleep...")
         time.sleep(int(12*60*60))
