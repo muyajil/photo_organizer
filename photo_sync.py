@@ -44,12 +44,12 @@ if __name__ == "__main__":
                 "{:02d}".format(create_date.month),
                 "{:02d}".format(create_date.day),
                 filename)
-            os.makedirs(os.path.dirname(target_path), exist_ok=True)
             if absolute_path == target_path:
                 print(f"{absolute_path} seems to be at the right place already...")
             else:
                 print(f"Moving {absolute_path} to {target_path}")
                 if not os.getenv("DRYRUN"):
+                    os.makedirs(os.path.dirname(target_path), exist_ok=True)
                     shutil.move(absolute_path, target_path)
         if os.getenv("RUN_ONCE"):
             exit(0)
