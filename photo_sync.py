@@ -43,7 +43,7 @@ if __name__ == "__main__":
             create_date = get_create_date(absolute_path)
             if not create_date:
                 print(f"Could not determine create date for {absolute_path}...")
-                if os.getenv("DUMPING_GROUND"):
+                if os.getenv("DUMPING_GROUND") and not os.getenv("DRYRUN"):
                     shutil.move(absolute_path, os.path.join(os.getenv("DUMPING_GROUND"), filename))
                 continue
             target_path = os.path.join(
