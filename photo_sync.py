@@ -12,17 +12,15 @@ def get_file_iterator(root: str):
             yield os.path.abspath(os.path.join(root, file)), file
 
 def get_create_date(path: str):
-    metadata = ET.get_metadata(path)
-    if metadata[0]["File:MIMEType"].startswith("video"):
-        key = "QuickTime:CreateDate"
-    else:
-        key = "EXIF:DateTimeOriginal"
-    create_date_string = ""
-    if key in metadata[0]:
-        create_date_string = metadata[0][key]
     try:
-        return datetime.strptime(create_date_string, '%Y:%m:%d %H:%M:%S')
-    except ValueError:
+        metadata = ET.get_metadata(path)
+        if metadata[0]["File:MIMEType"].startswith("video"):
+            key = "QuickTime:CreateDate"
+        else:
+            key = "EXIF:DateTimeOriginal"
+        return datetime.strptime(metadata[0][key], '%Y:%m:%d %H:%M:%S')
+            
+    except Exception:
         if os.getenv("ASSUME_CURRENT_DAY"):
             print(f"Assuming current day for {path}")
             return datetime.now()
