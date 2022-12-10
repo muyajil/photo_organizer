@@ -38,7 +38,9 @@ if __name__ == "__main__":
         for absolute_path, filename in get_file_iterator(source_root):
             create_date = get_create_date(absolute_path)
             if not create_date:
-                print(f"Could not determine create date for {absolute_path}, leaving it where it is...")
+                print(f"Could not determine create date for {absolute_path}...")
+                if os.getenv("DUMPING_GROUND"):
+                    shutil.move(absolute_path, os.path.join(os.getenv("DUMPING_GROUND"), filename))
                 continue
             target_path = os.path.join(
                 target_root, str(create_date.year),
