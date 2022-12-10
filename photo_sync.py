@@ -18,8 +18,8 @@ def get_create_date(path: str):
     else:
         key = "EXIF:DateTimeOriginal"
     if key not in metadata[0]:
-        if os.getenv("ASSUME_CURRENT_MONTH"):
-            print(f"Assuming current month for {path}")
+        if os.getenv("ASSUME_CURRENT_DAY"):
+            print(f"Assuming current day for {path}")
             return datetime.now()
         else:
             return None
