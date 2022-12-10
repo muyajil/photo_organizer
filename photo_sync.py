@@ -4,14 +4,15 @@ from datetime import datetime
 import time
 import exiftool
 
+ET = exiftool.ExifToolHelper()
+
 def get_file_iterator(root: str):
     for root, _, files in os.walk(root):
         for file in files:
             yield os.path.abspath(os.path.join(root, file)), file
 
 def get_create_date(path: str):
-    with exiftool.ExifToolHelper() as et:
-        metadata = et.get_metadata(path)
+    metadata = ET.get_metadata(path)
     if metadata[0]["File:MIMEType"].startswith("video"):
         key = "QuickTime:CreateDate"
     else:
